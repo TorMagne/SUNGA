@@ -3,9 +3,9 @@
     class="d-flex justify-center align-center flex-column"
     style="padding-top: 10rem"
   >
-    <v-form>
+    <v-form @submit="handleSubmit">
       <v-text-field
-        v-model="identifier"
+        v-model="modifiedLoginData.identifier"
         label="Epost"
         type="email"
         outlined
@@ -13,24 +13,50 @@
       >
       </v-text-field>
       <v-text-field
-        v-model="password"
+        v-model="modifiedLoginData.password"
         label="Passord"
-        type="password"
+        :type="showPassword ? 'text' : 'password'"
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append="showPassword = !showPassword"
         outlined
         required
       >
       </v-text-field>
-      <v-btn type="submit" color="deep-purple lighten-1">Logg inn</v-btn>
+      <v-btn type="submit" color="deep-purple lighten-1" elevation="0"
+        >Logg inn</v-btn
+      >
     </v-form>
   </div>
 </template>
+
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      identifier: "",
-      password: "",
+      modifiedLoginData: {
+        identifier: "",
+        password: "",
+      },
+      showPassword: false,
     };
+  },
+  methods: {
+    handleSubmit: async function (e) {
+      e.preventDefault();
+
+      try {
+        const response = await axios.post(
+          "http://localhost:1337/api/auth/local",
+          this.modifiedData
+        );
+        const { jwt, user } = response.data;
+        localStorage.setItem("jwt", jwt);
+        localStorage.setItem("userData", JSON.stringify(user));
+      } catch (error) {
+        this.error = error;
+      }
+    },
   },
 };
 </script>
