@@ -3,7 +3,7 @@
     class="d-flex justify-center align-center flex-column"
     style="padding-top: 10rem"
   >
-    <v-form @submit="handleSubmit">
+    <v-form @submit="logInn">
       <v-text-field
         v-model="modifiedLoginData.identifier"
         label="Epost"
@@ -42,13 +42,12 @@ export default {
     };
   },
   methods: {
-    handleSubmit: async function (e) {
+    async logInn(e) {
       e.preventDefault();
-
       try {
         const response = await axios.post(
           "http://localhost:1337/api/auth/local",
-          this.modifiedData
+          this.modifiedLoginData
         );
         const { jwt, user } = response.data;
         localStorage.setItem("jwt", jwt);

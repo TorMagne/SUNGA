@@ -1,13 +1,11 @@
 <template>
   <div>
-    <Login v-if="isLoggedInn == false" />
-    <HomeTemp v-else />
+    <Login />
   </div>
 </template>
 
 <script>
 import Login from "../components/Login.vue";
-import HomeTemp from "../components/HomeTemp.vue";
 export default {
   name: "Home",
   components: {
@@ -18,6 +16,21 @@ export default {
     return {
       isLoggedInn: false,
     };
+  },
+  mounted() {
+    this.checkIfLoggedIn();
+  },
+  computed: {},
+  methods: {
+    checkIfLoggedIn() {
+      if (localStorage.getItem("userData") == null) {
+        this.isLoggedInn = false;
+        console.log("false");
+      } else {
+        this.isLoggedInn = true;
+        console.log("true");
+      }
+    },
   },
 };
 </script>
