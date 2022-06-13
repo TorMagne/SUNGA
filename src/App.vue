@@ -20,4 +20,7 @@ export default {
 * {
   font-family: "Sora", sans-serif;
 }
+.v-application--wrap {
+  background-color: #f5f5f5;
+}
 </style>

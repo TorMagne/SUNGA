@@ -22,8 +22,8 @@ export default {
 </script>
 
 <style scoped>
-.container {
+/* .container {
   background-color: #f5f5f5;
   height: calc(100vh - 75px);
-}
+} */
 </style>
