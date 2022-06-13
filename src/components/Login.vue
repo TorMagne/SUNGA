@@ -1,6 +1,5 @@
 <template>
   <div>
-    <LoginHeader />
     <div class="container">
       <LoginForm />
     </div>
@@ -8,11 +7,9 @@
 </template>
 
 <script>
-import LoginHeader from "././layout/LoginHeader.vue";
 import LoginForm from "./LoginForm.vue";
 export default {
   components: {
-    LoginHeader,
     LoginForm,
   },
   data() {
