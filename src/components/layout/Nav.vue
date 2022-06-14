@@ -27,10 +27,9 @@
           </v-list-item>
           <v-list-item>
             <router-link to="/userpage" active-class="black--text" class="mr-5"
-              >Userpage</router-link
+              >Bruker side</router-link
             >
           </v-list-item>
-          <v-btn elevation="0" style="background-color: #7e57c2">Logg ut</v-btn>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -44,9 +43,8 @@
             >Home</router-link
           >
           <router-link to="/userpage" active-class="black--text" class="mr-5"
-            >Userpage</router-link
+            >Bruker side</router-link
           >
-          <v-btn elevation="0" style="background-color: #7e57c2">Logg ut</v-btn>
         </v-list-item-group>
       </v-list>
     </v-app-bar>
@@ -61,6 +59,7 @@ export default {
       group: null,
     };
   },
+  methods: {},
 };
 </script>
 
