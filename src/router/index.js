@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import InfoPage from '../views/InfoPage';
+import Userpage from '../views/Userpage';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/infopage',
     name: 'InfoPage',
     component: InfoPage,
+  },
+  {
+    path: '/brukerside',
+    name: 'brukerside',
+    component: Userpage,
   },
 ];
 

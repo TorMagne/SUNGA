@@ -26,7 +26,10 @@
             >
           </v-list-item>
           <v-list-item>
-            <router-link to="/userpage" active-class="black--text" class="mr-5"
+            <router-link
+              to="/brukerside"
+              active-class="black--text"
+              class="mr-5"
               >Bruker side</router-link
             >
           </v-list-item>
@@ -42,7 +45,7 @@
           <router-link to="/infopage" active-class="black--text" class="mr-5"
             >Home</router-link
           >
-          <router-link to="/userpage" active-class="black--text" class="mr-5"
+          <router-link to="/brukerside" active-class="black--text" class="mr-5"
             >Bruker side</router-link
           >
         </v-list-item-group>
