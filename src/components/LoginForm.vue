@@ -31,6 +31,7 @@
 
 <script>
 import axios from "axios";
+import API_URL from "../constants/api";
 export default {
   data() {
     return {
@@ -46,7 +47,7 @@ export default {
       e.preventDefault();
       try {
         const response = await axios.post(
-          "http://localhost:1337/api/auth/local",
+          process.env.VUE_APP_API_URL + "auth/local",
           this.modifiedLoginData
         );
         const { jwt, user } = response.data;
