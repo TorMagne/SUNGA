@@ -142,7 +142,7 @@
             style="margin-right: 1rem"
           />
           <input
-            class="dato-search"
+            class="work-detail-search"
             type="text"
             v-model="searchWorkDetails"
             placeholder="søk arbeids detaljer"
@@ -161,6 +161,13 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <div
+                      v-if="tables == false"
+                      style="padding: 1rem 0 1rem 1rem"
+                    >
+                      <h4>Her er det ikke noen arbeids dager enda</h4>
+                    </div>
+
                     <tr v-for="table in sortedTables" :key="table.id">
                       <td>{{ table.workDate }}</td>
                       <td>{{ table.workStartTime.slice(0, 5) }}</td>
@@ -337,7 +344,8 @@ export default {
   border-bottom: thin solid #7e57c2;
 }
 
-.dato-search {
+.dato-search,
+.work-detail-search {
   border: 1px solid #7e57c2;
   border-radius: 5px;
   margin-block: 2rem;
@@ -352,5 +360,12 @@ export default {
 }
 .v-text-field--outlined >>> fieldset {
   border-color: #7e57c2;
+}
+
+@media only screen and (max-width: 1263px) {
+  .dato-search,
+  .work-detail-search {
+    margin-block: 1rem !important;
+  }
 }
 </style>
