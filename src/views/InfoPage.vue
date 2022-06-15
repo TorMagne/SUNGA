@@ -7,6 +7,11 @@
         En app for arbeids loggføring og litt til
         <span style="font-size: 20px">&#128516;</span>
       </p>
+      <h3>Søk på dato</h3>
+      <p>
+        På (Bruker side) siden kan du søke på dato i søkefeltet som er over jobb
+        tabbelen
+      </p>
       <h3>Arbeids loggføring</h3>
       <p>
         På siden (Bruker side) får du oversikt over alle dine arbeids dager, du

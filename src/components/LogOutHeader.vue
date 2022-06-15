@@ -22,7 +22,6 @@ export default {
     },
     getUserObject() {
       this.user = JSON.parse(window.localStorage.getItem("userData"));
-      console.log(this.user.id);
     },
   },
 };

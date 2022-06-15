@@ -1,49 +1,270 @@
 <template>
-  <v-card>
-    <table v-for="(item, index) in table" :key="index">
-      <tr>
-        <th>Dato</th>
-        <th>Start tid</th>
-        <th>Slutt tid</th>
-        <th>Arbeids detaljer</th>
-      </tr>
-      <tr>
-        <td>{{ item.workDate }}</td>
-        <td>{{ item.workStartTime }}</td>
-        <td>{{ item.workEndTime }}</td>
-        <td>{{ item.workDetails }}</td>
-      </tr>
-    </table>
-    <pre>{{ table }}</pre>
-  </v-card>
+  <div>
+    <LogOutHeader />
+
+    <v-container>
+      <v-row style="margin-top: 5rem">
+        <v-col md="6" offset-md="3">
+          <v-form id="form" @submit="createWorkTable">
+            <v-row>
+              <!-- work day -->
+              <v-col md="12">
+                <v-menu
+                  ref="dayMenu"
+                  v-model="dayMenu"
+                  :close-on-content-click="false"
+                  :return-value.sync="newWorkInfo.data.workDate"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="newWorkInfo.data.workDate"
+                      label="Velg jobb dag"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                      outlined
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="newWorkInfo.data.workDate"
+                    no-title
+                    scrollable
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="dayMenu = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.dayMenu.save(newWorkInfo.data.workDate)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+
+                <!-- start work time -->
+
+                <v-menu
+                  ref="startMenu"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="newWorkInfo.data.workStartTime"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="newWorkInfo.data.workStartTime"
+                      label="Start tid"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                      outlined
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu2"
+                    v-model="newWorkInfo.data.workStartTime"
+                    full-width
+                    @click:minute="
+                      $refs.startMenu.save(newWorkInfo.data.workStartTime)
+                    "
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
+
+                <!-- end work time -->
+
+                <v-menu
+                  ref="endMenu"
+                  v-model="menu3"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="newWorkInfo.data.workEndTime"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="newWorkInfo.data.workEndTime"
+                      label="Slutt tid"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                      outlined
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu3"
+                    v-model="newWorkInfo.data.workEndTime"
+                    full-width
+                    @click:minute="
+                      $refs.endMenu.save(newWorkInfo.data.workEndTime)
+                    "
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
+
+                <v-textarea
+                  v-model="newWorkInfo.data.workDetails"
+                  name="workDetails"
+                  filled
+                  label="Jobb detaljer"
+                  auto-grow
+                  value=""
+                  outlined
+                ></v-textarea>
+                <v-btn type="submit">Lagre</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+          <input
+            class="dato-search"
+            type="text"
+            v-model="search"
+            placeholder="søk dato"
+          />
+          <v-card>
+            <v-card-title> Jobb tabbel </v-card-title>
+            <template>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Dato</th>
+                      <th class="text-left">Start tid</th>
+                      <th class="text-left">Slutt tid</th>
+                      <th class="text-left">Arbeids detaljer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="table in sortedTables" :key="table.id">
+                      <td>{{ table.workDate }}</td>
+                      <td>{{ table.workStartTime.slice(0, 5) }}</td>
+                      <td>{{ table.workEndTime.slice(0, 5) }}</td>
+                      <td>{{ table.workDetails }}</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </template>
+            <div class="text-center pb-2">
+              <v-btn
+                @click="prevPage"
+                elevation="0"
+                style="background-color: #7e57c2"
+                small
+              >
+                <v-icon dark left> mdi-arrow-left </v-icon></v-btn
+              >
+              <span style="margin: 0 1rem">{{ currentPage }}</span>
+              <v-btn
+                @click="nextPage"
+                elevation="0"
+                style="background-color: #7e57c2"
+                small
+                ><v-icon dark left> mdi-arrow-right </v-icon></v-btn
+              >
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
+
 
 <script>
 import axios from "axios";
+import LogOutHeader from "../components/LogOutHeader.vue";
 export default {
+  components: {
+    LogOutHeader,
+  },
   data() {
     return {
       user: {},
-      table: [],
-      headers: [
-        { text: "Dato", value: "workDate" },
-        { text: "Start tid", value: "workStartTime" },
-        { text: "Slutt tid", value: "workEndTime" },
-        { text: "Jobb detaljer", value: "workDetails" },
-      ],
+      tables: [],
+      search: "",
+      pageSize: 10,
+      currentPage: 1,
+      currentSort: "name",
+      currentSortDir: "asc",
+      newWorkInfo: {
+        data: {
+          workDate: new Date(
+            Date.now() - new Date().getTimezoneOffset() * 60000
+          )
+            .toISOString()
+            .substr(0, 10),
+          workStartTime: null,
+          workEndTime: null,
+          workDetails: "",
+          user: null,
+        },
+      },
+      dayMenu: false,
+      startMenu: false,
+      endMenu: false,
+      menu2: false,
+      menu3: false,
     };
   },
   async mounted() {
-    this.sliceTable();
     this.getUserWorkTable();
   },
   methods: {
-    sliceTable() {
-      this.table.forEach((tab) => {
-        let troll = tab.workStartTime.slice(0.5);
-        console.log(troll);
-      });
+    resetForm() {
+      this.newWorkInfo.data.workStartTime = "";
+      this.newWorkInfo.data.workEndTime = "";
+      this.newWorkInfo.data.workDetails = "";
     },
+    nextPage() {
+      if (this.currentPage * this.pageSize < this.tables.length)
+        this.currentPage++;
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
+    },
+
+    async createWorkTable(e) {
+      e.preventDefault();
+
+      let newData = this.newWorkInfo;
+
+      newData.data.workStartTime = newData.data.workStartTime + ":00";
+      newData.data.workEndTime = newData.data.workEndTime + ":00";
+      console.log(this.newWorkInfo);
+      let config = {
+        method: "post",
+        url: process.env.VUE_APP_API_URL + "work-tables",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+          "Content-Type": "application/json",
+        },
+        data: newData,
+      };
+
+      axios(config)
+        .then((response) => {
+          this.getUserWorkTable();
+          this.resetForm();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     async getUserWorkTable() {
       this.user = JSON.parse(window.localStorage.getItem("userData"));
       try {
@@ -58,11 +279,61 @@ export default {
             },
           }
         );
-        this.table = response.data.work_tables.reverse();
+        this.tables = response.data.work_tables.reverse();
+        this.newWorkInfo.data.user = response.data.id;
       } catch (error) {
         this.error = error;
       }
     },
   },
+  computed: {
+    sortedTables() {
+      return this.tables
+        .sort((a, b) => {
+          let modifier = 1;
+          if (this.currentSortDir === "desc") modifier = -1;
+          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          return 0;
+        })
+        .filter((row, index) => {
+          let start = (this.currentPage - 1) * this.pageSize;
+          let end = this.currentPage * this.pageSize;
+          if (index >= start && index < end) return true;
+        })
+        .filter((table) => {
+          return table.workDate.match(this.search);
+        });
+    },
+  },
 };
 </script>
+
+<style scoped>
+.theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr:last-child
+  > th {
+  color: black;
+  border-bottom: thin solid #7e57c2;
+}
+
+.dato-search {
+  border: 1px solid #7e57c2;
+  border-radius: 5px;
+  margin-block: 2rem;
+  padding: 0.2rem 0 0.2rem 0.5rem;
+}
+
+.dato-search:focus {
+  outline: 2px solid #7e57c2;
+}
+.v-application--is-ltr .v-btn__content .v-icon--left {
+  margin-right: 0;
+}
+.v-text-field--outlined >>> fieldset {
+  border-color: #7e57c2;
+}
+</style>
