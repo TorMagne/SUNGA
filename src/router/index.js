@@ -6,6 +6,20 @@ import Userpage from '../views/Userpage';
 
 Vue.use(VueRouter);
 
+const guardRoutes = ((to, from ,next) => {
+  let isAuthenticated = false;
+  if(localStorage.getItem('userData')){
+    isAuthenticated = true
+  } else {
+    isAuthenticated = false;
+  }
+  if(isAuthenticated){
+    next();
+  } else {
+    next('/')
+  }
+})
+
 const routes = [
   {
     path: '/',
@@ -16,11 +30,13 @@ const routes = [
     path: '/infopage',
     name: 'InfoPage',
     component: InfoPage,
+    beforeEnter : guardRoutes,
   },
   {
     path: '/brukerside',
     name: 'brukerside',
     component: Userpage,
+    beforeEnter : guardRoutes,
   },
 ];
 

@@ -124,7 +124,12 @@
                   value=""
                   outlined
                 ></v-textarea>
-                <v-btn type="submit">Lagre</v-btn>
+                <v-btn
+                  type="submit"
+                  elevation="0"
+                  style="background-color: #7e57c2"
+                  >Lagre</v-btn
+                >
               </v-col>
             </v-row>
           </v-form>

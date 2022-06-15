@@ -1,11 +1,16 @@
 <template>
   <div v-if="$vuetify.breakpoint.xsOnly">
     <v-app-bar elevation="0" color="white" height="75" app role="navigation">
-      <v-toolbar-title style="color: #7e57c2">SUNGA</v-toolbar-title>
+      <router-link to="/"
+        ><v-toolbar-title style="color: #7e57c2"
+          >SUNGA</v-toolbar-title
+        ></router-link
+      >
       <v-app-bar-nav-icon
         @click="drawer = true"
         inline
         class="ml-auto"
+        style="color: #7e57c2"
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -17,7 +22,7 @@
         >
           <div class="d-flex justify-end">
             <v-btn color="" icon @click="drawer = false">
-              <v-icon>mdi-close</v-icon>
+              <v-icon style="color: #7e57c2">mdi-close</v-icon>
             </v-btn>
           </div>
           <v-list-item>
@@ -39,7 +44,11 @@
   </div>
   <div v-else>
     <v-app-bar elevation="0" color="white" height="75" app role="navigation">
-      <v-toolbar-title style="color: #7e57c2">SUNGA</v-toolbar-title>
+      <router-link to="/"
+        ><v-toolbar-title style="color: #7e57c2"
+          >SUNGA</v-toolbar-title
+        ></router-link
+      >
       <v-list class="ml-auto">
         <v-list-item-group color="#ffffff">
           <router-link to="/infopage" active-class="black--text" class="mr-5"

@@ -33,7 +33,7 @@ export default {
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   background-color: white;
 }
 .theme--light.v-btn.v-btn--has-bg {
