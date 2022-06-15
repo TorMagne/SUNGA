@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$vuetify.breakpoint.xsOnly">
+  <div v-if="$vuetify.breakpoint.mdAndDown">
     <v-app-bar elevation="0" color="white" height="75" app role="navigation">
       <router-link to="/"
         ><v-toolbar-title style="color: #7e57c2"
