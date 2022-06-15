@@ -3,8 +3,9 @@
     <LogOutHeader />
 
     <v-container>
-      <v-row style="margin-top: 5rem">
+      <v-row style="margin-top: 1rem">
         <v-col md="6" offset-md="3">
+          <h1 style="margin-bottom: 2rem">Lagre arbeids dag</h1>
           <v-form id="form" @submit="createWorkTable">
             <v-row>
               <!-- work day -->
@@ -136,8 +137,15 @@
           <input
             class="dato-search"
             type="text"
-            v-model="search"
+            v-model="searchDate"
             placeholder="søk dato"
+            style="margin-right: 1rem"
+          />
+          <input
+            class="dato-search"
+            type="text"
+            v-model="searchWorkDetails"
+            placeholder="søk arbeids detaljer"
           />
           <v-card>
             <v-card-title> Jobb tabbel </v-card-title>
@@ -200,7 +208,8 @@ export default {
     return {
       user: {},
       tables: [],
-      search: "",
+      searchDate: "",
+      searchWorkDetails: "",
       pageSize: 10,
       currentPage: 1,
       currentSort: "name",
@@ -307,7 +316,10 @@ export default {
           if (index >= start && index < end) return true;
         })
         .filter((table) => {
-          return table.workDate.match(this.search);
+          return table.workDate.match(this.searchDate);
+        })
+        .filter((table) => {
+          return table.workDetails.match(this.searchWorkDetails);
         });
     },
   },

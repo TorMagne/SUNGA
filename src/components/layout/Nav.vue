@@ -26,7 +26,7 @@
             </v-btn>
           </div>
           <v-list-item>
-            <router-link to="/infopage" active-class="black--text" class="mr-5"
+            <router-link to="/infoside" active-class="black--text" class="mr-5"
               >Home</router-link
             >
           </v-list-item>
@@ -51,7 +51,7 @@
       >
       <v-list class="ml-auto">
         <v-list-item-group color="#ffffff">
-          <router-link to="/infopage" active-class="black--text" class="mr-5"
+          <router-link to="/infoside" active-class="black--text" class="mr-5"
             >Home</router-link
           >
           <router-link to="/brukerside" active-class="black--text" class="mr-5"

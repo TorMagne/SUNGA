@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import InfoPage from '../views/InfoPage';
 import Userpage from '../views/Userpage';
+import PageNotFound from '../views/PageNotFound'
 
 Vue.use(VueRouter);
 
@@ -27,8 +28,8 @@ const routes = [
     component: Home,
   },
   {
-    path: '/infopage',
-    name: 'InfoPage',
+    path: '/infoside',
+    name: 'Infoside',
     component: InfoPage,
     beforeEnter : guardRoutes,
   },
@@ -37,6 +38,10 @@ const routes = [
     name: 'brukerside',
     component: Userpage,
     beforeEnter : guardRoutes,
+  },
+  {
+    path: '*',
+    component: PageNotFound,
   },
 ];
 
