@@ -265,7 +265,6 @@ export default {
 
       newData.data.workStartTime = newData.data.workStartTime + ":00";
       newData.data.workEndTime = newData.data.workEndTime + ":00";
-      console.log(this.newWorkInfo);
       let config = {
         method: "post",
         url: process.env.VUE_APP_API_URL + "work-tables",
