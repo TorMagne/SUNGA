@@ -53,7 +53,6 @@ export default {
         localStorage.setItem("jwt", jwt);
         localStorage.setItem("userData", JSON.stringify(user));
         this.$router.push("/infoside");
-        console.log(response);
       } catch (error) {
         this.error = error;
       }
