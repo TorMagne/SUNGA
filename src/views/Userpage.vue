@@ -170,8 +170,8 @@
 
                     <tr v-for="table in sortedTables" :key="table.id">
                       <td>{{ table.workDate }}</td>
-                      <td>{{ table.workStartTime.slice(0, 5) }}</td>
-                      <td>{{ table.workEndTime.slice(0, 5) }}</td>
+                      <td>{{ table.workStartTime }}</td>
+                      <td>{{ table.workEndTime }}</td>
                       <td>{{ table.workDetails }}</td>
                     </tr>
                   </tbody>
@@ -263,8 +263,6 @@ export default {
 
       let newData = this.newWorkInfo;
 
-      newData.data.workStartTime = newData.data.workStartTime + ":00";
-      newData.data.workEndTime = newData.data.workEndTime + ":00";
       let config = {
         method: "post",
         url: process.env.VUE_APP_API_URL + "work-tables",
