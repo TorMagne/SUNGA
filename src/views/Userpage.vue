@@ -5,6 +5,9 @@
     <v-container>
       <v-row style="margin-top: 1rem">
         <v-col md="6" offset-md="3">
+          <div v-if="success">
+            <AddedWorkSuccess />
+          </div>
           <h1 style="margin-bottom: 2rem">Lagre arbeids dag</h1>
           <v-form
             id="form"
@@ -213,9 +216,11 @@
 <script>
 import axios from "axios";
 import LogOutHeader from "../components/LogOutHeader.vue";
+import AddedWorkSuccess from "../components/AddedWorkSuccess.vue";
 export default {
   components: {
     LogOutHeader,
+    AddedWorkSuccess,
   },
   data() {
     return {
@@ -249,12 +254,22 @@ export default {
       endMenu: false,
       menu2: false,
       menu3: false,
+      success: false,
     };
   },
   async mounted() {
     this.getUserWorkTable();
   },
   methods: {
+    successFunc() {
+      this.success = true;
+      setTimeout(
+        function () {
+          this.success = false;
+        }.bind(this),
+        4000
+      );
+    },
     resetForm() {
       this.newWorkInfo.data.workStartTime = "";
       this.newWorkInfo.data.workEndTime = "";
@@ -283,6 +298,7 @@ export default {
         .then((response) => {
           this.getUserWorkTable();
           this.resetForm();
+          this.successFunc();
         })
         .catch((error) => {
           console.log(error);
