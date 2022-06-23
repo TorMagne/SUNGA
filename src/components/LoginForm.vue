@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="vld-parent">
-      <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
+      <loading
+        :active.sync="isLoading"
+        :is-full-page="fullPage"
+        :loader="loader"
+      ></loading>
     </div>
     <div
       class="d-flex justify-center align-center flex-column"
@@ -48,6 +52,7 @@ export default {
     return {
       isLoading: false,
       fullPage: true,
+      loader: "dots",
       modifiedLoginData: {
         identifier: "",
         password: "",
