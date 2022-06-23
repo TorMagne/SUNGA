@@ -146,54 +146,22 @@
             placeholder="søk arbeids detaljer"
           />
           <!-- jobb tabell -->
+
           <v-card>
-            <v-card-title> Jobb tabell </v-card-title>
-            <template>
-              <v-simple-table>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Dato</th>
-                      <th class="text-left">Start tid</th>
-                      <th class="text-left">Slutt tid</th>
-                      <th class="text-left">Arbeids detaljer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <div
-                      v-if="tables == false"
-                      style="padding: 1rem 0 1rem 1rem"
-                    >
-                      <h4>Her er det ikke noen arbeids dager enda</h4>
-                    </div>
-                    <tr v-for="table in sortedTables" :key="table.id">
-                      <td>{{ table.workDate }}</td>
-                      <td>{{ table.workStartTime }}</td>
-                      <td>{{ table.workEndTime }}</td>
-                      <td>{{ table.workDetails }}</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </template>
-            <div class="text-center pb-2">
-              <v-btn
-                @click="prevPage"
-                elevation="0"
-                style="background-color: #7e57c2"
-                small
-              >
-                <v-icon dark left> mdi-arrow-left </v-icon></v-btn
-              >
-              <span style="margin: 0 1rem">{{ currentPage }}</span>
-              <v-btn
-                @click="nextPage"
-                elevation="0"
-                style="background-color: #7e57c2"
-                small
-                ><v-icon dark left> mdi-arrow-right </v-icon></v-btn
-              >
-            </div>
+            <v-card-title>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Søk"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              :headers="headers"
+              :items="sortedTables"
+              :search="search"
+            ></v-data-table>
           </v-card>
         </v-col>
       </v-row>
@@ -215,10 +183,13 @@ export default {
       tables: [],
       searchDate: "",
       searchWorkDetails: "",
-      pageSize: 10,
-      currentPage: 1,
-      currentSort: "name",
-      currentSortDir: "asc",
+      search: "",
+      headers: [
+        { text: "workDate", value: "workDate" },
+        { text: "workStartTime", value: "workStartTime" },
+        { text: "workEndTime", value: "workEndTime" },
+        { text: "workDetails", value: "workDetails" },
+      ],
       newWorkInfo: {
         data: {
           workDate: new Date(
@@ -247,13 +218,6 @@ export default {
       this.newWorkInfo.data.workStartTime = "";
       this.newWorkInfo.data.workEndTime = "";
       this.newWorkInfo.data.workDetails = "";
-    },
-    nextPage() {
-      if (this.currentPage * this.pageSize < this.tables.length)
-        this.currentPage++;
-    },
-    prevPage() {
-      if (this.currentPage > 1) this.currentPage--;
     },
 
     async createWorkTable(e) {
@@ -305,18 +269,6 @@ export default {
   computed: {
     sortedTables() {
       return this.tables
-        .sort((a, b) => {
-          let modifier = 1;
-          if (this.currentSortDir === "desc") modifier = -1;
-          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-          return 0;
-        })
-        .filter((row, index) => {
-          let start = (this.currentPage - 1) * this.pageSize;
-          let end = this.currentPage * this.pageSize;
-          if (index >= start && index < end) return true;
-        })
         .filter((table) => {
           return table.workDate.match(this.searchDate);
         })
@@ -329,16 +281,6 @@ export default {
 </script>
 
 <style scoped>
-.theme--light.v-data-table
-  > .v-data-table__wrapper
-  > table
-  > thead
-  > tr:last-child
-  > th {
-  color: black;
-  border-bottom: thin solid #7e57c2;
-}
-
 .dato-search,
 .work-detail-search {
   border: 1px solid #7e57c2;
@@ -356,7 +298,6 @@ export default {
 .v-text-field--outlined >>> fieldset {
   border-color: #7e57c2;
 }
-
 @media only screen and (max-width: 1263px) {
   .dato-search,
   .work-detail-search {
