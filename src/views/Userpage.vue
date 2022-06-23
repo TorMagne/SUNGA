@@ -49,7 +49,6 @@
                 </v-menu>
 
                 <!-- start work time -->
-
                 <v-menu
                   ref="startMenu"
                   v-model="menu2"
@@ -83,7 +82,6 @@
                 </v-menu>
 
                 <!-- end work time -->
-
                 <v-menu
                   ref="endMenu"
                   v-model="menu3"
@@ -147,6 +145,7 @@
             v-model="searchWorkDetails"
             placeholder="søk arbeids detaljer"
           />
+          <!-- jobb tabell -->
           <v-card>
             <v-card-title> Jobb tabell </v-card-title>
             <template>
@@ -167,7 +166,6 @@
                     >
                       <h4>Her er det ikke noen arbeids dager enda</h4>
                     </div>
-
                     <tr v-for="table in sortedTables" :key="table.id">
                       <td>{{ table.workDate }}</td>
                       <td>{{ table.workStartTime }}</td>
