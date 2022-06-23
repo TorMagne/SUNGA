@@ -6,7 +6,11 @@
       <v-row style="margin-top: 1rem">
         <v-col md="6" offset-md="3">
           <h1 style="margin-bottom: 2rem">Lagre arbeids dag</h1>
-          <v-form id="form" @submit="createWorkTable">
+          <v-form
+            id="form"
+            @submit="createWorkTable"
+            style="margin-bottom: 3rem"
+          >
             <v-row>
               <!-- work day -->
               <v-col md="12">
@@ -113,7 +117,7 @@
                     format="24hr"
                   ></v-time-picker>
                 </v-menu>
-
+                <!-- work details -->
                 <v-textarea
                   v-model="newWorkInfo.data.workDetails"
                   name="workDetails"
@@ -132,13 +136,49 @@
               </v-col>
             </v-row>
           </v-form>
-          <input
-            class="dato-search"
-            type="text"
-            v-model="searchDate"
-            placeholder="søk dato"
-            style="margin-right: 1rem"
-          />
+          <!-- søk på dato -->
+          <div class="d-flex flex-row align-baseline">
+            <v-menu
+              ref="searchDateMenu"
+              v-model="searchDateMenu"
+              :close-on-content-click="false"
+              :return-value.sync="searchDate"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="searchDate"
+                  label="Søk dato"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                  outlined
+                ></v-text-field>
+              </template>
+              <v-date-picker v-model="searchDate" no-title scrollable>
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="searchDateMenu = false">
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.searchDateMenu.save(searchDate)"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
+            <v-btn
+              style="height: 56px; background-color: #7e57c2; margin-left: 1rem"
+              elevation="0"
+              @click="resetSearchDate"
+              >Reset</v-btn
+            >
+          </div>
+
           <input
             class="work-detail-search"
             type="text"
@@ -204,6 +244,7 @@ export default {
         },
       },
       dayMenu: false,
+      searchDateMenu: false,
       startMenu: false,
       endMenu: false,
       menu2: false,
@@ -218,6 +259,9 @@ export default {
       this.newWorkInfo.data.workStartTime = "";
       this.newWorkInfo.data.workEndTime = "";
       this.newWorkInfo.data.workDetails = "";
+    },
+    resetSearchDate() {
+      this.searchDate = "";
     },
 
     async createWorkTable(e) {
