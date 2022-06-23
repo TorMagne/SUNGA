@@ -148,7 +148,7 @@
             placeholder="søk arbeids detaljer"
           />
           <v-card>
-            <v-card-title> Jobb tabbel </v-card-title>
+            <v-card-title> Jobb tabell </v-card-title>
             <template>
               <v-simple-table>
                 <template v-slot:default>
