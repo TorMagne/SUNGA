@@ -1,39 +1,53 @@
 <template>
-  <div
-    class="d-flex justify-center align-center flex-column"
-    style="padding-top: 10rem"
-  >
-    <v-form @submit="logInn">
-      <v-text-field
-        v-model="modifiedLoginData.identifier"
-        label="Epost"
-        type="email"
-        outlined
-        required
-      >
-      </v-text-field>
-      <v-text-field
-        v-model="modifiedLoginData.password"
-        label="Passord"
-        :type="showPassword ? 'text' : 'password'"
-        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        @click:append="showPassword = !showPassword"
-        outlined
-        required
-      >
-      </v-text-field>
-      <v-btn type="submit" color="deep-purple lighten-1" elevation="0"
-        >Logg inn</v-btn
-      >
-    </v-form>
+  <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
+    </div>
+    <div
+      class="d-flex justify-center align-center flex-column"
+      style="padding-top: 10rem"
+    >
+      <v-form @submit="logInn">
+        <v-text-field
+          v-model="modifiedLoginData.identifier"
+          label="Epost"
+          type="email"
+          outlined
+          required
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="modifiedLoginData.password"
+          label="Passord"
+          :type="showPassword ? 'text' : 'password'"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="showPassword = !showPassword"
+          outlined
+          required
+        >
+        </v-text-field>
+        <v-btn type="submit" color="deep-purple lighten-1" elevation="0"
+          >Logg inn</v-btn
+        >
+      </v-form>
+    </div>
   </div>
 </template>
 
 <script>
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
 import axios from "axios";
 export default {
+  components: {
+    Loading,
+  },
   data() {
     return {
+      isLoading: false,
+      fullPage: true,
       modifiedLoginData: {
         identifier: "",
         password: "",
@@ -45,6 +59,7 @@ export default {
     async logInn(e) {
       e.preventDefault();
       try {
+        this.isLoading = true;
         const response = await axios.post(
           process.env.VUE_APP_API_URL + "auth/local",
           this.modifiedLoginData
@@ -52,6 +67,7 @@ export default {
         const { jwt, user } = response.data;
         localStorage.setItem("jwt", jwt);
         localStorage.setItem("userData", JSON.stringify(user));
+        this.isLoading = false;
         this.$router.push("/infoside");
       } catch (error) {
         this.error = error;
