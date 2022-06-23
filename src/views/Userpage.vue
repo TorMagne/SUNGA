@@ -185,10 +185,10 @@ export default {
       searchWorkDetails: "",
       search: "",
       headers: [
-        { text: "workDate", value: "workDate" },
-        { text: "workStartTime", value: "workStartTime" },
-        { text: "workEndTime", value: "workEndTime" },
-        { text: "workDetails", value: "workDetails" },
+        { text: "Dato", value: "workDate" },
+        { text: "Start tid", value: "workStartTime" },
+        { text: "Slutt tid", value: "workEndTime" },
+        { text: "Detaljer", value: "workDetails" },
       ],
       newWorkInfo: {
         data: {
