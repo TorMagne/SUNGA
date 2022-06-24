@@ -3,23 +3,24 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import InfoPage from '../views/InfoPage';
 import Userpage from '../views/Userpage';
-import PageNotFound from '../views/PageNotFound'
+import PartyPage from '../views/PartyPage';
+import PageNotFound from '../views/PageNotFound';
 
 Vue.use(VueRouter);
 
-const guardRoutes = ((to, from ,next) => {
+const guardRoutes = (to, from, next) => {
   let isAuthenticated = false;
-  if(localStorage.getItem('userData')){
-    isAuthenticated = true
+  if (localStorage.getItem('userData')) {
+    isAuthenticated = true;
   } else {
     isAuthenticated = false;
   }
-  if(isAuthenticated){
+  if (isAuthenticated) {
     next();
   } else {
-    next('/')
+    next('/');
   }
-})
+};
 
 const routes = [
   {
@@ -31,13 +32,19 @@ const routes = [
     path: '/infoside',
     name: 'Infoside',
     component: InfoPage,
-    beforeEnter : guardRoutes,
+    beforeEnter: guardRoutes,
   },
   {
     path: '/brukerside',
     name: 'brukerside',
     component: Userpage,
-    beforeEnter : guardRoutes,
+    beforeEnter: guardRoutes,
+  },
+  {
+    path: '/selskapside',
+    name: 'selskap',
+    component: PartyPage,
+    beforeEnter: guardRoutes,
   },
   {
     path: '*',
