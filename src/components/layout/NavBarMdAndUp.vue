@@ -13,6 +13,9 @@
         <router-link to="/brukerside" active-class="black--text" class="mr-5"
           >Bruker side</router-link
         >
+        <router-link to="/selskapside" active-class="black--text" class="mr-5"
+          >Selskap</router-link
+        >
       </v-list-item-group>
     </v-list>
   </v-app-bar>

@@ -38,6 +38,14 @@
               >Bruker side</router-link
             >
           </v-list-item>
+          <v-list-item>
+            <router-link
+              to="/selskapside"
+              active-class="black--text"
+              class="mr-5"
+              >Selskap</router-link
+            >
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
