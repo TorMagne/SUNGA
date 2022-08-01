@@ -73,6 +73,7 @@ export default {
         localStorage.setItem("jwt", jwt);
         localStorage.setItem("userData", JSON.stringify(user));
         this.$store.state.userData = this.modifiedLoginData;
+        this.$store.commit("initialiseStore");
         // console.log(this.$store.state.username);
         this.isLoading = false;
         this.$router.push("/infoside");

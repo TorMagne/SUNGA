@@ -18,6 +18,7 @@ export default {
     logOut() {
       localStorage.removeItem("jwt");
       localStorage.removeItem("userData");
+      localStorage.removeItem("userInfo");
       this.$router.push("/");
     },
     getUserObject() {
