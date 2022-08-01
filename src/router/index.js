@@ -5,16 +5,18 @@ import InfoPage from '../views/InfoPage';
 import Userpage from '../views/Userpage';
 import PageNotFound from '../views/PageNotFound';
 import axios from 'axios';
+import { store } from '../store/store';
 
 Vue.use(VueRouter);
 
 const guardRoutes = async (to, from, next) => {
-  // let user = JSON.parse(window.localStorage.getItem('userData'));
-  // console.log(user);
+  let user = store.state.userData;
+
+  console.log('loltest', user);
 
   try {
-    const response = await axios.post(process.env.VUE_APP_API_URL + 'auth/local');
-    console.log('testing auth', response);
+    const response = await axios.post(process.env.VUE_APP_API_URL + 'auth/local', user);
+    console.log('auth response', response);
   } catch (error) {
     console.log(error);
   }
