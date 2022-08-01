@@ -3,23 +3,34 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import InfoPage from '../views/InfoPage';
 import Userpage from '../views/Userpage';
-import PageNotFound from '../views/PageNotFound'
+import PageNotFound from '../views/PageNotFound';
+import axios from 'axios';
 
 Vue.use(VueRouter);
 
-const guardRoutes = ((to, from ,next) => {
+const guardRoutes = async (to, from, next) => {
+  // let user = JSON.parse(window.localStorage.getItem('userData'));
+  // console.log(user);
+
+  try {
+    const response = await axios.post(process.env.VUE_APP_API_URL + 'auth/local');
+    console.log('testing auth', response);
+  } catch (error) {
+    console.log(error);
+  }
+
   let isAuthenticated = false;
-  if(localStorage.getItem('userData')){
-    isAuthenticated = true
+  if (localStorage.getItem('userData')) {
+    isAuthenticated = true;
   } else {
     isAuthenticated = false;
   }
-  if(isAuthenticated){
+  if (isAuthenticated) {
     next();
   } else {
-    next('/')
+    next('/');
   }
-})
+};
 
 const routes = [
   {
@@ -31,13 +42,13 @@ const routes = [
     path: '/infoside',
     name: 'Infoside',
     component: InfoPage,
-    beforeEnter : guardRoutes,
+    beforeEnter: guardRoutes,
   },
   {
     path: '/brukerside',
     name: 'brukerside',
     component: Userpage,
-    beforeEnter : guardRoutes,
+    beforeEnter: guardRoutes,
   },
   {
     path: '*',
