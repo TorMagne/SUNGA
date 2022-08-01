@@ -72,6 +72,8 @@ export default {
         const { jwt, user } = response.data;
         localStorage.setItem("jwt", jwt);
         localStorage.setItem("userData", JSON.stringify(user));
+        this.$store.state.username = this.modifiedLoginData;
+        console.log(this.$store.state.username);
         this.isLoading = false;
         this.$router.push("/infoside");
       } catch (error) {
