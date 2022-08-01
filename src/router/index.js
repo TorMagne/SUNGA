@@ -49,15 +49,6 @@ const routes = [
     name: 'brukerside',
     component: Userpage,
     beforeEnter: guardRoutes,
-<<<<<<< HEAD
-=======
-  },
-  {
-    path: '/selskapside',
-    name: 'selskap',
-    component: PartyPage,
-    beforeEnter: guardRoutes,
->>>>>>> 33124ce90bcb48db4e43f037eb956e2ad77416a2
   },
   {
     path: '*',
