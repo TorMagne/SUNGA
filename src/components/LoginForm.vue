@@ -41,7 +41,6 @@
 <script>
 // Import component
 import Loading from "vue-loading-overlay";
-import routerCheck from "../router/index";
 // Import stylesheet
 import "vue-loading-overlay/dist/vue-loading.css";
 import axios from "axios";
