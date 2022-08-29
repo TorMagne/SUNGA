@@ -1,6 +1,7 @@
 <template>
   <div>
     <ValidationObserver
+      ref="form"
       v-slot="{ handleSubmit, invalid }"
       class="w-full container mx-auto px-4 mt-12 flex flex-col items-center"
     >
@@ -45,6 +46,7 @@
           </label>
           <ValidationProvider rules="required" v-slot="{ errors }">
             <input
+              @focus="required = true"
               id="start time"
               type="time"
               placeholder="Select work date"
@@ -154,11 +156,21 @@ export default {
       );
     },
     resetForm() {
+      this.$refs.form.validate().then((success) => {
+        if (!success) {
+          return;
+        }
+      });
+      // Resetting Values
       this.newWorkInfo.data.workStartTime = "";
       this.newWorkInfo.data.workEndTime = "";
       this.newWorkInfo.data.workDetails = "";
+      // Wait until the models are updated in the UI
+      this.$nextTick(() => {
+        this.$refs.form.reset();
+      });
     },
-    async createWorkTable(event) {
+    async createWorkTable() {
       this.newWorkInfo.data.user = this.user.id;
 
       let config = {

@@ -146,6 +146,7 @@ export default {
     closeDialog() {
       this.isModalOpen = false;
       this.userData = null;
+      this.isDelete = false;
     },
   },
 };

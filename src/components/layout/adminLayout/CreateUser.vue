@@ -15,7 +15,7 @@
       md:w-96 md:ml-10
     "
   >
-    <ValidationObserver v-slot="{ handleSubmit, invalid }">
+    <ValidationObserver v-slot="{ handleSubmit, invalid }" ref="form">
       <form action="" @submit.prevent="handleSubmit(createUser)">
         <Heading title="Create user" />
         <Alert
@@ -133,9 +133,18 @@ export default {
   },
   methods: {
     resetForm() {
+      this.$refs.form.validate().then((success) => {
+        if (!success) {
+          return;
+        }
+      });
       this.userData.username = "";
       this.userData.email = "";
       this.userData.password = "";
+      // Wait until the models are updated in the UI
+      this.$nextTick(() => {
+        this.$refs.form.reset();
+      });
     },
     alertFunc() {
       this.isAlertOpen = true;

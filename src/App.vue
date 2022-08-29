@@ -26,7 +26,7 @@
               </div>
               <div class="flex-1 px-2 mx-2">
                 <router-link
-                  to="/"
+                  to="/guide"
                   class="text-primary text-3xl font-bold font-sora"
                   >SUNGA</router-link
                 >
