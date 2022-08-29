@@ -76,7 +76,18 @@
             v-if="authenticaded"
           >
             <!-- Sidebar content here -->
-            <li><router-link to="/guide">Guide</router-link></li>
+            <label
+              for="my-drawer-3"
+              class="
+                drawer-button
+                btn-primary btn btn-sm btn-circle
+                absolute
+                left-6
+                top-4
+              "
+              >X</label
+            >
+            <li class="mt-10"><router-link to="/guide">Guide</router-link></li>
             <li><router-link to="/work">Work</router-link></li>
             <li v-if="authenticaded.isAdmin">
               <router-link to="/admin">Admin panel</router-link>
