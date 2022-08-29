@@ -87,10 +87,20 @@
               "
               >X</label
             >
-            <li class="mt-10"><router-link to="/guide">Guide</router-link></li>
-            <li><router-link to="/work">Work</router-link></li>
+            <li class="mt-10">
+              <router-link to="/guide" active-class="text-primary font-bold"
+                >Guide</router-link
+              >
+            </li>
+            <li>
+              <router-link to="/work" active-class="text-primary font-bold"
+                >Work</router-link
+              >
+            </li>
             <li v-if="authenticaded.isAdmin">
-              <router-link to="/admin">Admin panel</router-link>
+              <router-link to="/admin" active-class="text-primary font-bold"
+                >Admin panel</router-link
+              >
             </li>
             <span class="py-3 px-4">Hei {{ user.username }}</span>
             <button class="btn btn-primary" @click="signOut">Logout</button>

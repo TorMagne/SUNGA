@@ -12,7 +12,7 @@
     <h2 class="font-sora font-bold text-2xl">
       Saving work hours and work details
     </h2>
-    <p class="mb-4 font-raleway">
+    <p class="mb-4 font-raleway max-w-2xl">
       On the work page. You will get an overview of all your work hours and work
       details. You can also save your work hours and work detail, by entering
       the start time, end time and work details in the form.
