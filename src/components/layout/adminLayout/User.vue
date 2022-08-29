@@ -42,7 +42,7 @@
       "
     >
       <div
-        class="card bg-white shadow-md mb-5"
+        class="card bg-white shadow-md mb-5 md:w-96 md:mb-0"
         v-for="user in sortedUsers"
         :key="user.id"
       >
@@ -116,7 +116,7 @@ export default {
   computed: {
     sortedUsers() {
       return this.users.filter((user) => {
-        return user.username.toLowerCase().match(this.searchUser);
+        return user.username.toLowerCase().match(this.searchUser.toLowerCase());
       });
     },
   },
