@@ -1,60 +1,57 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import InfoPage from '../views/InfoPage';
-import Userpage from '../views/Userpage';
-import PageNotFound from '../views/PageNotFound';
-import axios from 'axios';
-import { store } from '../store/store';
+import AdminView from '../views/AdminView.vue';
+import GuideView from '../views/GuideView.vue';
+import WorkView from '../views/WorkView.vue';
+import LoginView from '../views/LoginView.vue';
+// store
+import store from '@/store';
 
 Vue.use(VueRouter);
 
-const guardRoutes = async (to, from, next) => {
-  let user = store.state.userData;
-
-  console.log('loltest', user);
-
-  try {
-    const response = await axios.post(process.env.VUE_APP_API_URL + 'auth/local', user);
-    console.log('auth response', response);
-  } catch (error) {
-    console.log(error);
-  }
-
-  let isAuthenticated = false;
-  if (localStorage.getItem('userData')) {
-    isAuthenticated = true;
+let routerGuard = (to, from, next) => {
+  if (!store.getters['auth/authenticaded']) {
+    return next({
+      name: 'login',
+    });
   } else {
-    isAuthenticated = false;
-  }
-  if (isAuthenticated) {
-    next();
-  } else {
-    next('/');
+    if (to.name == 'admin') {
+      if (store.getters['auth/admin']) {
+        next();
+      } else {
+        next('guide');
+      }
+    } else {
+      next();
+    }
   }
 };
+
+console.log(store.getters);
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'login',
+    component: LoginView,
   },
   {
-    path: '/infoside',
-    name: 'Infoside',
-    component: InfoPage,
-    beforeEnter: guardRoutes,
+    path: '/guide',
+    name: 'guide',
+    component: GuideView,
+    beforeEnter: routerGuard,
   },
   {
-    path: '/brukerside',
-    name: 'brukerside',
-    component: Userpage,
-    beforeEnter: guardRoutes,
+    path: '/work',
+    name: 'work',
+    component: WorkView,
+    beforeEnter: routerGuard,
   },
   {
-    path: '*',
-    component: PageNotFound,
+    path: '/admin',
+    name: 'admin',
+    component: AdminView,
+    beforeEnter: routerGuard,
   },
 ];
 
@@ -62,7 +59,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  linkActiveClass: 'nav-active',
 });
 
 export default router;
