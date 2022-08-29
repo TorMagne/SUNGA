@@ -19,11 +19,11 @@
         class="mt-5"
       />
       <label class="label">
-        <span class="label-text font-raleway">Search user</span>
+        <span class="label-text font-raleway">Search username</span>
       </label>
       <input
         type="search"
-        placeholder="Search user"
+        placeholder="Search username"
         class="input input-bordered w-full border-primary"
         v-model="searchUser"
       />
