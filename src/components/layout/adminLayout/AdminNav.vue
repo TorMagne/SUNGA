@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col md:flex-row">
+  <div class="flex flex-col md:flex-row md:mt-10">
     <div>
       <ul
         class="
@@ -7,10 +7,10 @@
           bg-white
           md:w-56
           rounded-lg
-          my-10
           drop-shadow-md
           flex flex-row
-          md:flex-col md:mt-5
+          md:flex-col
+          font-raleway
         "
       >
         <li @click="showPanel(1)">

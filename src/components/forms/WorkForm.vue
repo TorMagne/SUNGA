@@ -108,7 +108,9 @@
             ></textarea>
             <span class="text-red-500">{{ errors[0] }}</span>
           </ValidationProvider>
-          <button class="btn btn-primary mt-5" :disabled="invalid">Save</button>
+          <button class="btn btn-primary mt-5 font-raleway" :disabled="invalid">
+            Save
+          </button>
         </div>
       </form>
     </ValidationObserver>

@@ -4,7 +4,6 @@
       container
       max-auto
       px-4
-      mt-5
       flex
       justify-center
       bg-white
@@ -167,12 +166,10 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data.message));
           this.alertFunc();
           this.resetForm();
         })
         .catch((error) => {
-          console.log(error);
           this.isError = true;
         });
     },

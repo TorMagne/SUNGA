@@ -33,7 +33,10 @@
           <label class="label">
             <span class="label-text font-raleway">Page size</span>
           </label>
-          <select class="select select-primary w-[5rem]" v-model="pageCount">
+          <select
+            class="select select-primary w-[5rem] font-raleway"
+            v-model="pageCount"
+          >
             <option v-for="(pageA, pageIndex) in pageArray" :key="pageIndex">
               {{ pageA }}
             </option>
@@ -70,7 +73,7 @@
         </table>
         <!-- pagiantion
          -->
-        <div class="btn-group justify-center my-3">
+        <div class="btn-group justify-center my-3 font-raleway">
           <button class="btn text-primary" @click="movePaginationStep('back')">
             «
           </button>

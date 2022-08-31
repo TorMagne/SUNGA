@@ -1,17 +1,6 @@
 <template>
   <div>
-    <div
-      class="
-        font-raleway
-        form-control
-        w-full
-        max-w-xs
-        block
-        md:ml-10
-        mb-3
-        md:mt-3
-      "
-    >
+    <div class="font-raleway form-control w-full max-w-xs block md:ml-10 mb-3">
       <Alert
         message="Something went wrong when trying to get users"
         v-if="isError"
