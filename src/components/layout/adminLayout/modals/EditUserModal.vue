@@ -24,7 +24,7 @@
       "
       v-if="isModalOpen"
     >
-      <div class="bg-white rounded-lg relative p-8 md:w-96">
+      <div class="bg-white rounded-lg relative p-8 md:w-96 w-[90vw]">
         <form action="" @submit.prevent="editUser(getUpdatedUsers)">
           <label
             @click="closeDialog"
@@ -40,7 +40,7 @@
           />
           <Alert
             message="Something went wrong when editing user"
-            v-if="isError"
+            v-else-if="isError"
             :alertClass="'alert-error'"
             class="mt-5"
           />
@@ -129,14 +129,24 @@ export default {
     getUpdatedUsers() {
       this.$emit("childParentConnection");
     },
+    // handle alerts and alert time
     alertFunc() {
-      this.isAlertOpen = true;
-      setTimeout(
-        function () {
-          this.isAlertOpen = false;
-        }.bind(this),
-        4000
-      );
+      if (this.isAlertOpen) {
+        setTimeout(
+          function () {
+            this.isAlertOpen = false;
+          }.bind(this),
+          4000
+        );
+      }
+      if (this.isError) {
+        setTimeout(
+          function () {
+            this.isError = false;
+          }.bind(this),
+          4000
+        );
+      }
     },
     async editUser() {
       let data = this.editedUserData;
@@ -161,10 +171,12 @@ export default {
 
       axios(config)
         .then((response) => {
+          this.isAlertOpen = true;
           this.alertFunc();
         })
         .catch((error) => {
           this.isError = true;
+          this.alertFunc();
         });
     },
     openDialog(dataFromParent) {

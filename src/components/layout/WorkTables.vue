@@ -44,44 +44,123 @@
         </div>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="table font-raleway">
-          <!-- head -->
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Start time</th>
-              <th>End Time</th>
-              <th>Details</th>
+      <!-- desktop table -->
+      <div class="desktop-table">
+        <table
+          class="
+            w-full
+            flex flex-row flex-no-wrap
+            sm:bg-white
+            rounded-lg
+            overflow-hidden
+            sm:shadow-lg
+            my-5
+          "
+        >
+          <thead class="text-white">
+            <tr
+              class="
+                bg-primary
+                flex flex-col flex-no
+                wrap
+                sm:table-row
+                rounded-l-lg
+                sm:rounded-none
+                mb-2
+                sm:mb-0
+              "
+            >
+              <th class="p-3 text-left">Date</th>
+              <th class="p-3 text-left">Start time</th>
+              <th class="p-3 text-left">End time</th>
+              <th class="p-3 text-left">Details</th>
             </tr>
           </thead>
-
-          <tbody class="" v-for="table in paginationArray" :key="table.id">
-            <tr>
-              <td class="whitespace-nowrap bg-white">{{ table.workDate }}</td>
-              <td class="whitespace-nowrap bg-white">
+          <tbody
+            class="flex-1 sm:flex-none"
+            v-for="table in paginationArray"
+            :key="table.id"
+          >
+            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+              <td class="border-grey-light border p-3">
+                {{ table.workDate }}
+              </td>
+              <td class="border-grey-light border p-3 truncate">
                 {{ table.workStartTime }}
               </td>
-              <td class="whitespace-nowrap bg-white">
+              <td class="border-grey-light border p-3">
                 {{ table.workEndTime }}
               </td>
-              <td class="whitespace-nowrap bg-white">
+              <td class="border-grey-light border p-3">
                 {{ table.workDetails }}
               </td>
             </tr>
           </tbody>
         </table>
-        <!-- pagiantion
+      </div>
+
+      <!-- mobile table -->
+      <div class="mobile-table">
+        <table
+          v-for="table in paginationArray"
+          :key="table.id"
+          class="
+            w-full
+            flex flex-row flex-no-wrap
+            sm:bg-white
+            rounded-lg
+            overflow-hidden
+            sm:shadow-lg
+            my-5
+          "
+        >
+          <thead class="text-white">
+            <tr
+              class="
+                bg-primary
+                flex flex-col flex-no
+                wrap
+                sm:table-row
+                rounded-l-lg
+                sm:rounded-none
+                mb-2
+                sm:mb-0
+              "
+            >
+              <th class="p-3 text-left">Date</th>
+              <th class="p-3 text-left">Start time</th>
+              <th class="p-3 text-left">End time</th>
+              <th class="p-3 text-left">Details</th>
+            </tr>
+          </thead>
+          <tbody class="flex-1 sm:flex-none">
+            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+              <td class="border-grey-light border p-3">
+                {{ table.workDate }}
+              </td>
+              <td class="border-grey-light border p-3 truncate">
+                {{ table.workStartTime }}
+              </td>
+              <td class="border-grey-light border p-3">
+                {{ table.workEndTime }}
+              </td>
+              <td class="border-grey-light border p-3">
+                {{ table.workDetails }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- pagiantion
          -->
-        <div class="btn-group justify-center my-3 font-raleway">
-          <button class="btn text-primary" @click="movePaginationStep('back')">
-            «
-          </button>
-          <button class="btn">{{ page }}</button>
-          <button class="btn text-primary" @click="movePaginationStep('next')">
-            »
-          </button>
-        </div>
+      <div class="btn-group justify-center my-3 font-raleway">
+        <button class="btn text-primary" @click="movePaginationStep('back')">
+          «
+        </button>
+        <button class="btn">{{ page }}</button>
+        <button class="btn text-primary" @click="movePaginationStep('next')">
+          »
+        </button>
       </div>
     </div>
   </div>
@@ -111,6 +190,7 @@ export default {
     this.getUserWorkTable();
   },
   methods: {
+    // calculate the move step for the pagiantion
     movePaginationStep(stepDirection) {
       if (stepDirection == "back") {
         if (this.page != 1) {
@@ -122,6 +202,7 @@ export default {
         }
       }
     },
+    // get all work tables for the loged in user
     async getUserWorkTable() {
       try {
         const response = await axios.get(
@@ -138,9 +219,7 @@ export default {
           this.workAdded = false;
         }
         this.tables = response.data.work_tables.reverse();
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     },
   },
   computed: {
@@ -152,6 +231,7 @@ export default {
     ...mapGetters({
       user: "auth/user",
     }),
+    // filter tables from search date
     sortedDateTables() {
       return this.tables.filter((table) => {
         return table.workDate.toLowerCase().match(this.searchDate);
@@ -160,3 +240,35 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+html,
+body {
+  height: 100%;
+}
+
+@media (min-width: 640px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+td:not(:last-child) {
+  border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .desktop-table {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .mobile-table {
+    display: none;
+  }
+}
+</style>

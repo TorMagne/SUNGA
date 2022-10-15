@@ -5,10 +5,14 @@
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col">
           <!-- Navbar -->
-          <div class="navbar h-[64px] w-full bg-white">
-            <div class="container mx-auto">
+          <div class="navbar w-full bg-white px-0">
+            <div class="container mx-auto px-4">
               <div class="flex-none lg:hidden">
-                <label for="my-drawer-3" class="btn btn-square btn-ghost">
+                <label
+                  for="my-drawer-3"
+                  class="btn btn-square btn-ghost"
+                  v-if="authenticaded"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -24,7 +28,7 @@
                   </svg>
                 </label>
               </div>
-              <div class="flex-1 px-2 mx-2">
+              <div class="flex-1">
                 <router-link
                   to="/guide"
                   class="text-primary text-3xl font-bold font-sora"
@@ -58,8 +62,7 @@
                       >Admin panel</router-link
                     >
                   </li>
-                  <span class="py-3 px-4">Hei {{ user.username }}</span>
-                  <button class="btn btn-primary" @click="signOut">
+                  <button class="btn btn-primary md:ml-4" @click="signOut">
                     Logout
                   </button>
                 </ul>
@@ -102,7 +105,6 @@
                 >Admin panel</router-link
               >
             </li>
-            <span class="py-3 px-4">Hei {{ user.username }}</span>
             <button class="btn btn-primary" @click="signOut">Logout</button>
           </ul>
         </div>
@@ -112,6 +114,7 @@
 </template>
 
 <script>
+// utillity
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {

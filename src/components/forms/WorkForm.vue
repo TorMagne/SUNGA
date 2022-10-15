@@ -90,7 +90,7 @@
             <span class="label-text font-raleway">Work details</span>
           </label>
           <ValidationProvider
-            rules="required"
+            rules="required|max:150"
             v-slot="{ errors }"
             class="w-full"
           >
@@ -191,9 +191,7 @@ export default {
           this.alertFunc();
           this.resetForm();
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     },
   },
   computed: {

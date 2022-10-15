@@ -5,6 +5,7 @@ export default {
     token: null,
     user: null,
     admin: null,
+    newMessages: null,
   },
   getters: {
     authenticaded(state) {
@@ -16,6 +17,9 @@ export default {
     admin(state) {
       return state.admin;
     },
+    newMessages(state) {
+      return state.newMessages;
+    },
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -26,6 +30,9 @@ export default {
     },
     SET_ADMIN(state, data) {
       state.admin = data;
+    },
+    SET_NEWMESSAGES(state, data) {
+      state.newMessages = data;
     },
   },
   actions: {
@@ -53,11 +60,22 @@ export default {
         commit('SET_USER', null);
         commit('SET_ADMIN', null);
       }
+
+      // check messages
+      try {
+        let responseRead = await axios.get('messages');
+        commit('SET_NEWMESSAGES', responseRead.data)
+      } catch (error) {
+        commit('SET_NEWMESSAGES', null);
+      }
     },
+
     signOut({ commit }) {
       commit('SET_TOKEN', null);
       commit('SET_USER', null);
       commit('SET_ADMIN', null);
+      commit('SET_NEWMESSAGES', null);
     },
   },
+
 };

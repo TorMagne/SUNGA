@@ -2,8 +2,8 @@
   <div
     class="
       container
-      max-auto
-      px-4
+      mx-auto
+      md:ml-4
       flex
       justify-center
       bg-white
@@ -11,7 +11,9 @@
       relative
       p-8
       shadow-md
-      md:w-96 md:ml-10
+      md:w-96
+      mt-10
+      md:mt-0
     "
   >
     <ValidationObserver v-slot="{ handleSubmit, invalid }" ref="form">
@@ -131,6 +133,7 @@ export default {
     };
   },
   methods: {
+    // function to reset form after submit
     resetForm() {
       this.$refs.form.validate().then((success) => {
         if (!success) {
@@ -145,6 +148,7 @@ export default {
         this.$refs.form.reset();
       });
     },
+    // handle alerts and alert time
     alertFunc() {
       this.isAlertOpen = true;
       setTimeout(
@@ -154,6 +158,7 @@ export default {
         4000
       );
     },
+    // api call to create user
     createUser() {
       let config = {
         method: "post",

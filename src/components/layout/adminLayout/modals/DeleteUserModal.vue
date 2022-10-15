@@ -103,6 +103,7 @@ export default {
     getUpdatedUsers() {
       this.$emit("childParentConnection");
     },
+    // handle alerts and alert time
     alertFunc() {
       this.isAlertOpen = true;
       setTimeout(
@@ -112,6 +113,7 @@ export default {
         4000
       );
     },
+    // api call to delete user
     deleteUser() {
       let config = {
         method: "delete",
@@ -124,12 +126,10 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response.data);
           this.alertFunc();
           this.getUpdatedUsers();
         })
         .catch((error) => {
-          console.log(error);
           this.isError = true;
         });
     },

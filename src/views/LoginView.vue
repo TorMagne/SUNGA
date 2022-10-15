@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="
-      container
-      mx-auto
-      px-4
-      flex flex-col
-      items-center
-      h-screen
-      justify-center
-    "
-  >
+  <div class="mx-auto flex items-center h-screen">
     <LoginForm />
   </div>
 </template>

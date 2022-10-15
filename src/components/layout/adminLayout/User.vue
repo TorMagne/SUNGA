@@ -1,33 +1,32 @@
 <template>
   <div>
-    <div class="font-raleway form-control w-full max-w-xs block md:ml-10 mb-3">
-      <Alert
-        message="Something went wrong when trying to get users"
-        v-if="isError"
-        :alertClass="'alert-error'"
-        class="mt-5"
-      />
-      <label class="label">
+    <Alert
+      message="Something went wrong when trying to get users"
+      v-if="isError"
+      :alertClass="'alert-error'"
+      class="mt-5"
+    />
+    <div class="font-raleway form-control w-full max-w-xs mb-3 mt-8 md:mt-0">
+      <!-- search user drop down -->
+      <label class="label pt-0 md:pl-4">
         <span class="label-text font-raleway">Search username</span>
       </label>
-      <input
-        type="search"
-        placeholder="Search username"
-        class="input input-bordered w-full border-primary"
+      <v-select
+        class="drop-down-search mb-3 md:ml-4"
+        label="username"
+        :options="users"
         v-model="searchUser"
-      />
+      ></v-select>
     </div>
     <div
       class="
         md:container
         md:mx-auto
         md:px-4
-        md:mt-5
         md:gap-5
         md:flex
         md:flex-row
         md:flex-wrap
-        md:ml-5
       "
     >
       <div
@@ -67,8 +66,8 @@
 <script>
 // components
 import Alert from "@/components/layout/Alert.vue";
-import DeleteUserModal from "@/components/layout/adminLayout/model/DeleteUserModal.vue";
-import EditUserModal from "@/components/layout/adminLayout/model/EditUserModal.vue";
+import DeleteUserModal from "@/components/layout/adminLayout/modals/DeleteUserModal.vue";
+import EditUserModal from "@/components/layout/adminLayout/modals/EditUserModal.vue";
 // utillity
 import axios from "axios";
 export default {
@@ -80,7 +79,7 @@ export default {
   data() {
     return {
       users: [],
-      searchUser: "",
+      searchUser: null,
       isError: false,
     };
   },
@@ -88,6 +87,7 @@ export default {
     this.getAllUsers();
   },
   methods: {
+    // api call to get all users
     async getAllUsers() {
       try {
         const response = await axios.get("users?populate=*", {
@@ -97,17 +97,29 @@ export default {
         });
         this.users = response.data;
       } catch (error) {
-        console.log(error);
         this.isError = true;
       }
     },
   },
   computed: {
+    // filter user based on the users username
     sortedUsers() {
-      return this.users.filter((user) => {
-        return user.username.toLowerCase().match(this.searchUser.toLowerCase());
-      });
+      if (this.searchUser && this.searchUser.username) {
+        return this.users.filter((user) => {
+          return user.username
+            .toLowerCase()
+            .match(this.searchUser.username.toLowerCase());
+        });
+      } else {
+        return this.users;
+      }
     },
   },
 };
 </script>
+
+<style scoped>
+.drop-down-search {
+  --vs-border-color: #664cc3;
+}
+</style>

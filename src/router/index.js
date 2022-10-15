@@ -27,8 +27,6 @@ let routerGuard = (to, from, next) => {
   }
 };
 
-console.log(store.getters);
-
 const routes = [
   {
     path: '/',
